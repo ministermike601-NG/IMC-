@@ -1,0 +1,222 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * The Influencers Nations Membership Class — design system.
+ * Palette: white canvas, royal blue, gold accents. Faith-based, elegant.
+ * All colors are oklch semantic tokens. Never hardcode colors in components.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-gold-soft: var(--gold-soft);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 1rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.24 0.05 264);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.24 0.05 264);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.24 0.05 264);
+
+  /* Royal blue */
+  --primary: oklch(0.42 0.19 264);
+  --primary-foreground: oklch(0.99 0.005 264);
+  --primary-soft: oklch(0.95 0.03 264);
+
+  /* Gold */
+  --gold: oklch(0.78 0.13 84);
+  --gold-foreground: oklch(0.28 0.07 264);
+  --gold-soft: oklch(0.96 0.04 88);
+
+  --secondary: oklch(0.965 0.012 264);
+  --secondary-foreground: oklch(0.32 0.08 264);
+  --muted: oklch(0.968 0.008 264);
+  --muted-foreground: oklch(0.53 0.035 264);
+  --accent: oklch(0.96 0.04 88);
+  --accent-foreground: oklch(0.32 0.08 264);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.99 0.003 264);
+  --border: oklch(0.92 0.012 264);
+  --input: oklch(0.92 0.012 264);
+  --ring: oklch(0.42 0.19 264);
+
+  --chart-1: oklch(0.42 0.19 264);
+  --chart-2: oklch(0.78 0.13 84);
+  --chart-3: oklch(0.6 0.12 230);
+  --chart-4: oklch(0.68 0.1 150);
+  --chart-5: oklch(0.55 0.15 300);
+
+  --sidebar: oklch(0.985 0.005 264);
+  --sidebar-foreground: oklch(0.24 0.05 264);
+  --sidebar-primary: oklch(0.42 0.19 264);
+  --sidebar-primary-foreground: oklch(0.99 0.005 264);
+  --sidebar-accent: oklch(0.96 0.04 88);
+  --sidebar-accent-foreground: oklch(0.32 0.08 264);
+  --sidebar-border: oklch(0.92 0.012 264);
+  --sidebar-ring: oklch(0.42 0.19 264);
+
+  /* Expressive tokens */
+  --gradient-royal: linear-gradient(135deg, oklch(0.34 0.16 266), oklch(0.48 0.2 262));
+  --gradient-gold: linear-gradient(135deg, oklch(0.82 0.12 90), oklch(0.72 0.14 74));
+  --shadow-elegant: 0 18px 45px -22px oklch(0.42 0.19 264 / 0.45);
+  --shadow-soft: 0 6px 20px -12px oklch(0.42 0.19 264 / 0.35);
+  --transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark {
+  --background: oklch(0.19 0.04 264);
+  --foreground: oklch(0.97 0.005 264);
+  --card: oklch(0.24 0.05 264);
+  --card-foreground: oklch(0.97 0.005 264);
+  --popover: oklch(0.24 0.05 264);
+  --popover-foreground: oklch(0.97 0.005 264);
+  --primary: oklch(0.68 0.16 264);
+  --primary-foreground: oklch(0.15 0.04 264);
+  --primary-soft: oklch(0.3 0.07 264);
+  --gold: oklch(0.8 0.13 84);
+  --gold-foreground: oklch(0.2 0.05 264);
+  --gold-soft: oklch(0.32 0.06 84);
+  --secondary: oklch(0.28 0.05 264);
+  --secondary-foreground: oklch(0.97 0.005 264);
+  --muted: oklch(0.28 0.05 264);
+  --muted-foreground: oklch(0.72 0.03 264);
+  --accent: oklch(0.3 0.06 84);
+  --accent-foreground: oklch(0.97 0.005 264);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.99 0.003 264);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.68 0.16 264);
+  --sidebar: oklch(0.24 0.05 264);
+  --sidebar-foreground: oklch(0.97 0.005 264);
+  --sidebar-primary: oklch(0.68 0.16 264);
+  --sidebar-primary-foreground: oklch(0.15 0.04 264);
+  --sidebar-accent: oklch(0.3 0.06 84);
+  --sidebar-accent-foreground: oklch(0.97 0.005 264);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.68 0.16 264);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+@utility gradient-royal {
+  background-image: var(--gradient-royal);
+}
+
+@utility gradient-gold {
+  background-image: var(--gradient-gold);
+}
+
+@utility shadow-elegant {
+  box-shadow: var(--shadow-elegant);
+}
+
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+@utility rise-in {
+  animation: rise-in 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility draw-check {
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
+  animation: draw-check 900ms 200ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes draw-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
