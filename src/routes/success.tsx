@@ -70,7 +70,7 @@ function SuccessPage() {
             <div>
               <p className="font-semibold">Programme Dates</p>
               <p className="text-muted-foreground">
-                31 July – 15 August
+                7 August – 22 August
               </p>
             </div>
           </div>

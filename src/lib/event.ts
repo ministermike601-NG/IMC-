@@ -1,18 +1,17 @@
 /**
- * Single source of truth for all programme content.
- * The Influencers Nations Membership Class — a 3-week discipleship
- * and leadership training programme (Fridays & Saturdays, GMT+1).
- */
-
+Single source of truth for all programme content.
+The Influencers Nations Membership Class — a 3-week discipleship
+and leadership training programme (Fridays & Saturdays, GMT+1).
+*/
 export const EVENT = {
   name: "The Influencers Nations Membership Class",
   shortName: "IMC",
   tagline:
     "Join our 3-Week Influencers Nations Membership Class designed to establish believers in sound doctrine, Christian character, evangelism, leadership, ministry excellence, and technology for Kingdom impact.",
-  duration: "Three weeks · Fridays & Saturdays",
+  duration: "Three Weeks · Fridays & Saturdays · 7:00 PM (GMT+1)",
   timezone: "GMT+1",
-  startDate: "31 July",
-  endDate: "15 August",
+  startDate: "7 August",
+  endDate: "22 August",
   email: "kingdominfluencers01@gmail.com",
   phone: "+234 800 000 0000",
   whatsapp: "+234 800 000 0000",
@@ -22,7 +21,6 @@ export const EVENT = {
 export type ClassItem = {
   number: string;
   title: string;
-  
 };
 
 export type WeekDay = {
@@ -47,16 +45,16 @@ export const WEEKS: Week[] = [
     week: 1,
     label: "Week 1",
     theme: "Foundations of the Christian Life",
-    dates: "Friday, 31 July · Saturday, 1 August",
+    dates: "Friday, 7 August · Saturday, 8 August",
     days: [
       {
         day: "Friday",
-        date: "31 July",
+        date: "7 August",
         items: ["Class 1: New Creation", "Class 2: The Holy Spirit"],
       },
       {
         day: "Saturday",
-        date: "1 August",
+        date: "8 August",
         items: ["Class 3: Christian Doctrines"],
         assessment: "Week 1 Assessment — conducted immediately after the final class",
       },
@@ -65,17 +63,14 @@ export const WEEKS: Week[] = [
       {
         number: "Class 1",
         title: "New Creation",
-        
       },
       {
         number: "Class 2",
         title: "The Holy Spirit",
-        
       },
       {
         number: "Class 3",
         title: "Christian Doctrines",
-       
       },
     ],
     assessment: "Week 1 Assessment",
@@ -84,16 +79,16 @@ export const WEEKS: Week[] = [
     week: 2,
     label: "Week 2",
     theme: "Ministry and Kingdom Culture",
-    dates: "Friday, 7 August · Saturday, 8 August",
+    dates: "Friday, 14 August · Saturday, 15 August",
     days: [
       {
         day: "Friday",
-        date: "7 August",
+        date: "14 August",
         items: ["Class 4: Evangelism / Introduction to Embassy Ministries"],
       },
       {
         day: "Saturday",
-        date: "8 August",
+        date: "15 August",
         items: ["Class 5: Christian Character and Prosperity"],
         assessment: "Week 2 Assessment — conducted immediately after the final class",
       },
@@ -102,13 +97,10 @@ export const WEEKS: Week[] = [
       {
         number: "Class 4",
         title: "Evangelism / Introduction to Embassy Ministries",
-        
       },
-     
       {
         number: "Class 5",
         title: "Christian Character and Prosperity",
-        
       },
     ],
     assessment: "Week 2 Assessment",
@@ -117,11 +109,11 @@ export const WEEKS: Week[] = [
     week: 3,
     label: "Week 3",
     theme: "Leadership, Technology, and Excellence",
-    dates: "Friday, 14 August · Saturday, 15 August",
+    dates: "Friday, 21 August · Saturday, 22 August",
     days: [
       {
         day: "Friday",
-        date: "14 August",
+        date: "21 August",
         items: [
           "Class 6: Local Assembly and The Influencers Nation",
           "Class 7: Introduction to Mobile Technology for Evangelism, Church Growth, and Ministry Expansion",
@@ -129,7 +121,7 @@ export const WEEKS: Week[] = [
       },
       {
         day: "Saturday",
-        date: "15 August",
+        date: "22 August",
         items: ["Class 8: IMC Excellence and Best Practices"],
         assessment:
           "Final IMC Examination — a comprehensive examination covering all classes taught throughout the three-week programme, followed by graduation and commissioning",
@@ -139,18 +131,15 @@ export const WEEKS: Week[] = [
       {
         number: "Class 6",
         title: "Local Assembly and The Influencers Nation",
-        
       },
       {
         number: "Class 7",
         title:
           "Introduction to Mobile Technology for Evangelism, Church Growth, and Ministry Expansion",
-        
       },
       {
         number: "Class 8",
         title: "IMC Excellence and Best Practices",
-        
       },
     ],
     assessment: "Final IMC Examination",
@@ -183,9 +172,9 @@ export const OUTCOMES = [
 /** Attendance options offered on the registration form. */
 export const ATTENDANCE_OPTIONS = [
   "Full Programme (all three weeks)",
-  "Week 1 — 31 July & 1 August",
-  "Week 2 — 7 & 8 August",
-  "Week 3 — 14 & 15 August",
+  "Week 1 — 7 August & 8 August",
+  "Week 2 — 14 August & 15 August",
+  "Week 3 — 21 August & 22 August",
 ] as const;
 
 export const MEMBERSHIP_STATUSES = ["Visitor", "New Member", "Existing Member", "Leader"] as const;

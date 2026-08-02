@@ -22,7 +22,7 @@ import { EVENT, OUTCOMES, WEEKS } from "@/lib/event";
 
 const title = "Influencers Nations Membership Class — 3-Week Training";
 const description =
-  "Register for the three-week Influencers Nations Membership Class. Classes hold every Friday and Saturday from 31 July to 15 August (GMT+1).";
+  "Register for the three-week Influencers Nations Membership Class. Classes hold every Friday and Saturday from 7 August to 22 August (GMT+1).";
 
 export const Route = createFileRoute("/")({
   head: () => ({
