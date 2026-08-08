@@ -16,6 +16,7 @@ const NAV = [
   { to: "/", label: "Home" },
   { to: "/curriculum", label: "Curriculum" },
   { to: "/schedule", label: "Schedule" },
+  { to: "/archive", label: "Class Archive" },
   { to: "/qr", label: "Share / QR" },
 ] as const;
 
@@ -23,9 +24,8 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/90 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
-
+    <header className="border-b bg-background/95 backdrop-blur">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
           <img
@@ -53,7 +53,8 @@ export function SiteHeader() {
               to={item.to}
               className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
               activeProps={{
-                className: "rounded-lg bg-secondary px-3 py-2 text-sm font-medium text-foreground",
+                className:
+                  "rounded-lg bg-secondary px-3 py-2 text-sm font-medium text-foreground",
               }}
               activeOptions={{ exact: item.to === "/" }}
             >
@@ -114,7 +115,6 @@ export function SiteHeader() {
             </SheetContent>
           </Sheet>
         </div>
-
       </div>
     </header>
   );
