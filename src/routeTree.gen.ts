@@ -19,6 +19,9 @@ import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SuccessRouteImport } from './routes/success'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as ArchiveIndexRouteImport } from './routes/archive/index'
+import { Route as ArchiveClassRouteImport } from './routes/archive/$class'
+import { Route as AssessmentTestRouteImport } from './routes/assessment/$test'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -69,6 +72,21 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ArchiveIndexRoute = ArchiveIndexRouteImport.update({
+  id: '/archive/',
+  path: '/archive/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArchiveClassRoute = ArchiveClassRouteImport.update({
+  id: '/archive/$class',
+  path: '/archive/$class',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssessmentTestRoute = AssessmentTestRouteImport.update({
+  id: '/assessment/$test',
+  path: '/assessment/$test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -80,6 +98,9 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/success': typeof SuccessRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/archive/$class': typeof ArchiveClassRoute
+  '/assessment/$test': typeof AssessmentTestRoute
+  '/archive/': typeof ArchiveIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -91,6 +112,9 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/success': typeof SuccessRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/archive/$class': typeof ArchiveClassRoute
+  '/assessment/$test': typeof AssessmentTestRoute
+  '/archive': typeof ArchiveIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -104,6 +128,9 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/success': typeof SuccessRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/archive/$class': typeof ArchiveClassRoute
+  '/assessment/$test': typeof AssessmentTestRoute
+  '/archive/': typeof ArchiveIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -117,6 +144,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/success'
     | '/admin'
+    | '/archive/$class'
+    | '/assessment/$test'
+    | '/archive/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -128,6 +158,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/success'
     | '/admin'
+    | '/archive/$class'
+    | '/assessment/$test'
+    | '/archive'
   id:
     | '__root__'
     | '/'
@@ -140,6 +173,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/success'
     | '/_authenticated/admin'
+    | '/archive/$class'
+    | '/assessment/$test'
+    | '/archive/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -152,6 +188,9 @@ export interface RootRouteChildren {
   ScheduleRoute: typeof ScheduleRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SuccessRoute: typeof SuccessRoute
+  ArchiveClassRoute: typeof ArchiveClassRoute
+  AssessmentTestRoute: typeof AssessmentTestRoute
+  ArchiveIndexRoute: typeof ArchiveIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -226,6 +265,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/archive/': {
+      id: '/archive/'
+      path: '/archive'
+      fullPath: '/archive/'
+      preLoaderRoute: typeof ArchiveIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/archive/$class': {
+      id: '/archive/$class'
+      path: '/archive/$class'
+      fullPath: '/archive/$class'
+      preLoaderRoute: typeof ArchiveClassRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assessment/$test': {
+      id: '/assessment/$test'
+      path: '/assessment/$test'
+      fullPath: '/assessment/$test'
+      preLoaderRoute: typeof AssessmentTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -250,6 +310,9 @@ const rootRouteChildren: RootRouteChildren = {
   ScheduleRoute: ScheduleRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SuccessRoute: SuccessRoute,
+  ArchiveClassRoute: ArchiveClassRoute,
+  AssessmentTestRoute: AssessmentTestRoute,
+  ArchiveIndexRoute: ArchiveIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

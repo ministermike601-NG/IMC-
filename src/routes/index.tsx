@@ -97,7 +97,7 @@ function Home() {
 
           <div className="mt-7 flex flex-wrap justify-center gap-3 text-sm text-primary-foreground/90">
             <span className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 px-4 py-2 backdrop-blur">
-              <CalendarDays className="size-4" aria-hidden /> 31 July – 15 August
+              <CalendarDays className="size-4" aria-hidden /> 7 August – 22 August
             </span>
             <span className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 px-4 py-2 backdrop-blur">
               <Clock className="size-4" aria-hidden /> Fridays &amp; Saturdays · {EVENT.timezone}
@@ -210,14 +210,22 @@ function Home() {
           ))}
         </ol>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button asChild variant="outline" size="lg" className="h-12 rounded-full">
-            <Link to="/curriculum">View full curriculum</Link>
-          </Button>
-          <Button asChild size="lg" className="h-12 rounded-full">
-            <Link to="/schedule">See class schedule</Link>
-          </Button>
-        </div>
+        
+<div className="mt-8 flex flex-wrap justify-center gap-3">
+  <Button asChild variant="outline" size="lg" className="h-12 rounded-full">
+    <Link to="/curriculum">View full curriculum</Link>
+  </Button>
+
+  <Button asChild variant="outline" size="lg" className="h-12 rounded-full">
+    <Link to="/archive">Class Archive</Link>
+  </Button>
+
+  <Button asChild size="lg" className="h-12 rounded-full">
+    <Link to="/schedule">See class schedule</Link>
+  </Button>
+</div>
+
+
       </section>
 
       {/* Outcomes */}

@@ -1,4 +1,11 @@
-import { BookOpen, CalendarDays, Clock, PlayCircle } from "lucide-react";
+import {
+  BookOpen,
+  CalendarDays,
+  ClipboardPenLine,
+  Clock,
+  FileText,
+  PlayCircle,
+} from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
@@ -44,7 +51,7 @@ export function ClassArchiveCard({
   return (
     <Card className="flex h-full flex-col overflow-hidden rounded-3xl border-border/70 shadow-soft">
       <CardHeader>
-        <div className="mb-3 flex items-center justify-between gap-2">
+        <div className="mb-3 flex items-center justify-between gap-3">
           <span className="text-xs font-semibold tracking-[0.16em] text-primary uppercase">
             {number}
           </span>
@@ -88,6 +95,7 @@ export function ClassArchiveCard({
             }`}
           >
             <PlayCircle className="size-4 shrink-0" aria-hidden />
+
             <span>
               {hasRecording
                 ? "Class recording available"
@@ -103,6 +111,7 @@ export function ClassArchiveCard({
             }`}
           >
             <BookOpen className="size-4 shrink-0" aria-hidden />
+
             <span>
               {hasMaterials
                 ? ebookTitle ?? "Class ebook available"
@@ -117,45 +126,51 @@ export function ClassArchiveCard({
                 : "bg-secondary/60 text-muted-foreground"
             }`}
           >
-            <span className="text-base" aria-hidden>
-              📝
-            </span>
+            <FileText className="size-4 shrink-0" aria-hidden />
 
             <span>
               {hasTest
                 ? testTitle ?? "Class test available"
-                : testTitle
-                  ? `${testTitle} — available later`
-                  : "Class test available later"}
+                : "Class test coming soon"}
             </span>
           </div>
         </div>
       </CardContent>
 
       <CardFooter className="flex flex-wrap gap-2">
-        <Button asChild className="flex-1 rounded-full">
-          <Link
-            to="/archive/$class"
-            params={{ class: slug }}
-          >
-            <PlayCircle className="mr-2 size-4" aria-hidden />
-            View Class
-          </Link>
-        </Button>
+  <Button asChild className="flex-1 rounded-full">
+    <Link to="/archive/$class" params={{ class: slug }}>
+      <PlayCircle className="mr-2 size-4" aria-hidden />
+      View Class
+    </Link>
+  </Button>
 
-        {ebookUrl ? (
-          <Button asChild variant="outline" className="rounded-full">
-            <a
-              href={ebookUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Open ${ebookTitle ?? title} ebook`}
-            >
-              <BookOpen className="size-4" aria-hidden />
-            </a>
-          </Button>
-        ) : null}
-      </CardFooter>
+  {ebookUrl ? (
+    <Button asChild variant="outline" className="rounded-full">
+      <a
+        href={ebookUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Open ${ebookTitle ?? title} ebook`}
+      >
+        <BookOpen className="size-4" aria-hidden />
+      </a>
+    </Button>
+  ) : null}
+
+  {testUrl ? (
+    <Button asChild variant="outline" className="rounded-full">
+      <a
+        href={testUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Open ${testTitle ?? title} test`}
+      >
+        <FileText className="size-4" aria-hidden />
+      </a>
+    </Button>
+  ) : null}
+</CardFooter>
     </Card>
   );
 }

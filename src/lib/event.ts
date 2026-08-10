@@ -1,8 +1,8 @@
 /**
-Single source of truth for all programme content.
-The Influencers Nations Membership Class — a 3-week discipleship
-and leadership training programme (Fridays & Saturdays, GMT+1).
-*/
+ * Single source of truth for all programme content.
+ * The Influencers Nations Membership Class — a 3-week discipleship
+ * and leadership training programme (Fridays & Saturdays, GMT+1).
+ */
 export const EVENT = {
   name: "The Influencers Nations Membership Class",
   shortName: "IMC",
@@ -56,7 +56,8 @@ export const WEEKS: Week[] = [
         day: "Saturday",
         date: "8 August",
         items: ["Class 3: Christian Doctrines"],
-        assessment: "Week 1 Assessment — conducted immediately after the final class",
+        assessment:
+          "Week 1 Assessment — conducted immediately after the final class",
       },
     ],
     classes: [
@@ -75,6 +76,7 @@ export const WEEKS: Week[] = [
     ],
     assessment: "Week 1 Assessment",
   },
+
   {
     week: 2,
     label: "Week 2",
@@ -84,13 +86,16 @@ export const WEEKS: Week[] = [
       {
         day: "Friday",
         date: "14 August",
-        items: ["Class 4: Evangelism / Introduction to Embassy Ministries"],
+        items: [
+          "Class 4: Evangelism / Introduction to Embassy Ministries",
+        ],
       },
       {
         day: "Saturday",
         date: "15 August",
         items: ["Class 5: Christian Character and Prosperity"],
-        assessment: "Week 2 Assessment — conducted immediately after the final class",
+        assessment:
+          "Week 2 Assessment — conducted immediately after the final class",
       },
     ],
     classes: [
@@ -105,6 +110,7 @@ export const WEEKS: Week[] = [
     ],
     assessment: "Week 2 Assessment",
   },
+
   {
     week: 3,
     label: "Week 3",
@@ -151,7 +157,7 @@ export const FINAL_SESSION = {
   description:
     "All participants take a final assessment covering the entire curriculum. Successful participants graduate from the Influencers Membership Class (IMC), receive official recognition, and are commissioned into The Influencers Nations Membership Community.",
   points: [
-    "Comprehensive assessment covering all nine classes",
+    "Comprehensive assessment covering all eight classes",
     "Evaluation of understanding and practical application",
     "Graduation and commissioning ceremony",
     "Presentation of certificates (if applicable)",
@@ -169,7 +175,9 @@ export const OUTCOMES = [
   "Receive recognition upon successful completion",
 ];
 
-/** Attendance options offered on the registration form. */
+/**
+ * Attendance options offered on the registration form.
+ */
 export const ATTENDANCE_OPTIONS = [
   "Full Programme (all three weeks)",
   "Week 1 — 7 August & 8 August",
@@ -177,9 +185,21 @@ export const ATTENDANCE_OPTIONS = [
   "Week 3 — 21 August & 22 August",
 ] as const;
 
-export const MEMBERSHIP_STATUSES = ["Visitor", "New Member", "Existing Member", "Leader"] as const;
+export const MEMBERSHIP_STATUSES = [
+  "Visitor",
+  "New Member",
+  "Existing Member",
+  "Leader",
+] as const;
 
-export const AGE_RANGES = ["Under 18", "18–24", "25–34", "35–44", "45–54", "55+"] as const;
+export const AGE_RANGES = [
+  "Under 18",
+  "18–24",
+  "25–34",
+  "35–44",
+  "45–54",
+  "55+",
+] as const;
 
 export const GENDERS = ["Male", "Female"] as const;
 
