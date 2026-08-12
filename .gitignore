@@ -33,3 +33,12 @@ dist-ssr
 
 build-error.txt
 mobys-assessment-audit.txt
+
+# Environment variables
+.env
+.env.*
+!.env.example
+# Environment variables
+.env
+.env.*
+!.env.example
