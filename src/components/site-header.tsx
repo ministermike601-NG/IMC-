@@ -65,6 +65,15 @@ export function SiteHeader() {
           <Button asChild size="sm" className="ml-2 rounded-full">
             <Link to="/register">Register Now</Link>
           </Button>
+
+          <Button
+            asChild
+            size="sm"
+            variant="outline"
+            className="ml-1 rounded-full"
+          >
+            <Link to="/admin">Admin</Link>
+          </Button>
         </nav>
 
         {/* Mobile Navigation */}
@@ -110,6 +119,14 @@ export function SiteHeader() {
                   className="mt-3 rounded-xl bg-primary px-3 py-3 text-center text-base font-semibold text-primary-foreground"
                 >
                   Register Now
+                </Link>
+
+                <Link
+                  to="/admin"
+                  onClick={() => setOpen(false)}
+                  className="rounded-xl border border-input px-3 py-3 text-center text-base font-semibold text-foreground transition-colors hover:bg-secondary"
+                >
+                  Admin
                 </Link>
               </nav>
             </SheetContent>
