@@ -42,3 +42,5 @@ mobys-assessment-audit.txt
 .env
 .env.*
 !.env.example
+
+.vercel

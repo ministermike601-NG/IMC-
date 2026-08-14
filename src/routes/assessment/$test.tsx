@@ -1,5 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, CheckCircle2, ClipboardPenLine, Loader2 } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  ClipboardPenLine,
+  Loader2,
+} from "lucide-react";
 import { useState } from "react";
 
 import { AnswerUpload } from "@/components/assessment/AnswerUpload";
@@ -11,7 +16,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getArchiveClass } from "@/lib/archive/classes";
-import { submitAssessment } from "@/lib/assessment/submit";
+import {
+  cancelAssessmentSubmission,
+  finalizeAssessmentSubmission,
+  prepareAssessmentSubmission,
+} from "@/lib/assessment/submit";
+
+import { supabase } from "@/integrations/supabase/client";
+
 export const Route = createFileRoute("/assessment/$test")({
   component: AssessmentSubmissionPage,
 });
@@ -48,8 +60,11 @@ function AssessmentSubmissionPage() {
     );
   }
 
+  // Keep a non-optional reference for nested callbacks such as handleSubmit.
+  const currentArchiveClass = archiveClass;
+
   const testAvailable = Boolean(
-    archiveClass.testUrl && archiveClass.testUrl.trim(),
+    currentArchiveClass.testUrl && currentArchiveClass.testUrl.trim(),
   );
 
   if (!testAvailable) {
@@ -57,7 +72,7 @@ function AssessmentSubmissionPage() {
       <main className="min-h-screen">
         <section className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
           <span className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-            {archiveClass.number}
+            {currentArchiveClass.number}
           </span>
 
           <h1 className="mt-5 font-display text-3xl font-bold">
@@ -96,48 +111,106 @@ function AssessmentSubmissionPage() {
       return;
     }
 
+    let submissionId: string | null = null;
+    const uploadedStoragePaths: string[] = [];
+
     try {
       setSubmitting(true);
 
-      const encodedFiles = await Promise.all(
-        files.map(
-          (file) =>
-            new Promise<{
-              name: string;
-              type: string;
-              data: string;
-            }>((resolve, reject) => {
-              const reader = new FileReader();
-
-              reader.onload = () => {
-                resolve({
-                  name: file.name,
-                  type: file.type,
-                  data: String(reader.result),
-                });
-              };
-
-              reader.onerror = () => {
-                reject(new Error(`Unable to read ${file.name}.`));
-              };
-
-              reader.readAsDataURL(file);
-            }),
-        ),
-      );
-
-      await submitAssessment({
+      // Verify registration and create the submission first.
+      const preparation = await prepareAssessmentSubmission({
         data: {
-          testSlug: archiveClass.slug,
+          testSlug: currentArchiveClass.slug,
           fullName,
           phone,
-          files: encodedFiles,
+          files: files.map((file) => ({
+            name: file.name,
+            type: file.type,
+          })),
+        },
+      });
+
+      submissionId = preparation.submissionId;
+
+      if (!submissionId) {
+        throw new Error("Unable to create an assessment submission.");
+      }
+
+      const uploadedPages: {
+        pageNumber: number;
+        storagePath: string;
+        originalFileName: string;
+      }[] = [];
+
+      // Upload each image directly to Supabase Storage.
+      for (let index = 0; index < files.length; index++) {
+        const file = files[index];
+        const uploadInfo = preparation.uploadUrls[index];
+
+        if (!uploadInfo) {
+          throw new Error(
+            `Upload information for page ${index + 1} is missing.`,
+          );
+        }
+
+        const { error: uploadError } = await supabase.storage
+          .from("imc-test-submissions")
+          .uploadToSignedUrl(
+            uploadInfo.storagePath,
+            uploadInfo.token,
+            file,
+          );
+
+        if (uploadError) {
+          console.error(
+            `Page ${index + 1} upload failed:`,
+            uploadError,
+          );
+
+          throw new Error(
+            `Unable to upload answer page ${index + 1}.`,
+          );
+        }
+
+        uploadedStoragePaths.push(uploadInfo.storagePath);
+
+        uploadedPages.push({
+          pageNumber: uploadInfo.pageNumber,
+          storagePath: uploadInfo.storagePath,
+          originalFileName: uploadInfo.originalFileName,
+        });
+      }
+
+      // Save the storage paths after every image has uploaded successfully.
+      await finalizeAssessmentSubmission({
+        data: {
+          submissionId,
+          files: uploadedPages,
         },
       });
 
       setSubmitted(true);
     } catch (submissionError) {
-      console.error(submissionError);
+      console.error(
+        "Assessment submission failed:",
+        submissionError,
+      );
+
+      if (submissionId) {
+        try {
+          await cancelAssessmentSubmission({
+            data: {
+              submissionId,
+              storagePaths: uploadedStoragePaths,
+            },
+          });
+        } catch (cleanupError) {
+          console.error(
+            "Submission cleanup failed:",
+            cleanupError,
+          );
+        }
+      }
 
       setError(
         submissionError instanceof Error
@@ -163,7 +236,7 @@ function AssessmentSubmissionPage() {
               </div>
 
               <span className="mt-6 block text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                {archiveClass.number}
+                {currentArchiveClass.number}
               </span>
 
               <h1 className="mt-3 font-display text-3xl font-bold">
@@ -173,7 +246,7 @@ function AssessmentSubmissionPage() {
               <p className="mx-auto mt-4 max-w-lg leading-7 text-muted-foreground">
                 Thank you, {fullName}. Your handwritten answers for{" "}
                 <strong className="text-foreground">
-                  {archiveClass.title}
+                  {currentArchiveClass.title}
                 </strong>{" "}
                 have been received and are now awaiting marking.
               </p>
@@ -203,7 +276,7 @@ function AssessmentSubmissionPage() {
       <section className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
         <Link
           to="/archive/$class"
-          params={{ class: archiveClass.slug }}
+          params={{ class: currentArchiveClass.slug }}
           className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="mr-2 size-4" aria-hidden />
@@ -212,7 +285,7 @@ function AssessmentSubmissionPage() {
 
         <div className="mt-8">
           <span className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-            {archiveClass.number}
+            {currentArchiveClass.number}
           </span>
 
           <h1 className="mt-2 font-display text-4xl font-bold sm:text-5xl">
@@ -220,7 +293,7 @@ function AssessmentSubmissionPage() {
           </h1>
 
           <p className="mt-4 text-muted-foreground">
-            {archiveClass.title} — Test Submission
+            {currentArchiveClass.title} — Test Submission
           </p>
         </div>
 

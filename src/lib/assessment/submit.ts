@@ -1,17 +1,30 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 
-type SubmissionFile = {
+type FileMetadata = {
   name: string;
   type: string;
-  data: string;
 };
 
-export type SubmissionInput = {
+export type PrepareSubmissionInput = {
   testSlug: string;
   fullName: string;
   phone: string;
-  files: SubmissionFile[];
+  files: FileMetadata[];
+};
+
+export type FinalizeSubmissionInput = {
+  submissionId: string;
+  files: {
+    pageNumber: number;
+    storagePath: string;
+    originalFileName: string;
+  }[];
+};
+
+export type CancelSubmissionInput = {
+  submissionId: string;
+  storagePaths?: string[];
 };
 
 function getSupabaseAdmin() {
@@ -30,13 +43,22 @@ function getSupabaseAdmin() {
   });
 }
 
-export const submitAssessment = createServerFn({
+function getClassNumber(testSlug: string) {
+  const classNumber = Number(testSlug.replace("class-", ""));
+
+  if (!Number.isInteger(classNumber) || classNumber < 1 || classNumber > 8) {
+    throw new Error("Invalid assessment.");
+  }
+
+  return classNumber;
+}
+
+export const prepareAssessmentSubmission = createServerFn({
   method: "POST",
 })
-  .validator((input: SubmissionInput) => input)
+  .validator((input: PrepareSubmissionInput) => input)
   .handler(async ({ data }) => {
     const supabase = getSupabaseAdmin();
-
     const fullName = data.fullName.trim();
     const phone = data.phone.trim();
 
@@ -61,7 +83,7 @@ export const submitAssessment = createServerFn({
         .limit(1);
 
     if (registrationError) {
-      console.error(registrationError);
+      console.error("Registration verification error:", registrationError);
       throw new Error("Unable to verify your registration.");
     }
 
@@ -73,17 +95,7 @@ export const submitAssessment = createServerFn({
       );
     }
 
-    const classNumber = Number(
-      data.testSlug.replace("class-", ""),
-    );
-
-    if (
-      !Number.isInteger(classNumber) ||
-      classNumber < 1 ||
-      classNumber > 8
-    ) {
-      throw new Error("Invalid assessment.");
-    }
+    const classNumber = getClassNumber(data.testSlug);
 
     const { data: test, error: testError } = await supabase
       .from("imc_tests")
@@ -93,7 +105,7 @@ export const submitAssessment = createServerFn({
       .maybeSingle();
 
     if (testError) {
-      console.error(testError);
+      console.error("Test lookup error:", testError);
       throw new Error("Unable to load the assessment.");
     }
 
@@ -110,10 +122,8 @@ export const submitAssessment = createServerFn({
         .maybeSingle();
 
     if (existingError) {
-      console.error(existingError);
-      throw new Error(
-        "Unable to check your previous submission.",
-      );
+      console.error("Existing submission check error:", existingError);
+      throw new Error("Unable to check your previous submission.");
     }
 
     if (existingSubmission) {
@@ -134,33 +144,19 @@ export const submitAssessment = createServerFn({
         .single();
 
     if (submissionError || !submission) {
-      console.error(submissionError);
+      console.error("Submission creation error:", submissionError);
       throw new Error("Unable to create your submission.");
     }
 
-    const uploadedPages: {
-      submission_id: string;
-      page_number: number;
-      storage_path: string;
-      original_file_name: string;
-    }[] = [];
-
     try {
+      const uploadUrls = [];
+
       for (let index = 0; index < data.files.length; index++) {
         const file = data.files[index];
 
         if (!file.type.startsWith("image/")) {
-          throw new Error(
-            `Page ${index + 1} is not a valid image file.`,
-          );
+          throw new Error(`Page ${index + 1} is not a valid image file.`);
         }
-
-        const base64 = file.data.replace(
-          /^data:image\/[^;]+;base64,/,
-          "",
-        );
-
-        const binary = Buffer.from(base64, "base64");
 
         const extension =
           file.name.split(".").pop()?.toLowerCase() || "jpg";
@@ -168,38 +164,33 @@ export const submitAssessment = createServerFn({
         const storagePath =
           `${registration.id}/${test.id}/${submission.id}/page-${index + 1}.${extension}`;
 
-        const { error: uploadError } = await supabase.storage
-          .from("imc-test-submissions")
-          .upload(storagePath, binary, {
-            contentType: file.type,
-            upsert: false,
-          });
+        const { data: signedUpload, error: signedUploadError } =
+          await supabase.storage
+            .from("imc-test-submissions")
+            .createSignedUploadUrl(storagePath);
 
-        if (uploadError) {
-          throw uploadError;
+        if (signedUploadError || !signedUpload) {
+          console.error(
+            `Signed upload URL error for page ${index + 1}:`,
+            signedUploadError,
+          );
+          throw new Error(
+            `Unable to prepare page ${index + 1} for upload.`,
+          );
         }
 
-        uploadedPages.push({
-          submission_id: submission.id,
-          page_number: index + 1,
-          storage_path: storagePath,
-          original_file_name: file.name,
+        uploadUrls.push({
+          pageNumber: index + 1,
+          storagePath,
+          token: signedUpload.token,
+          originalFileName: file.name,
         });
-      }
-
-      const { error: pagesError } = await supabase
-        .from("imc_submission_pages")
-        .insert(uploadedPages);
-
-      if (pagesError) {
-        throw pagesError;
       }
 
       return {
         success: true,
         submissionId: submission.id,
-        message:
-          "Your test has been submitted successfully and is now awaiting marking.",
+        uploadUrls,
       };
     } catch (error) {
       await supabase
@@ -207,10 +198,108 @@ export const submitAssessment = createServerFn({
         .delete()
         .eq("id", submission.id);
 
-      console.error(error);
+      console.error("Assessment preparation error:", error);
 
       throw new Error(
-        "We could not complete your upload. Please try again.",
+        error instanceof Error
+          ? error.message
+          : "We could not prepare your test submission.",
       );
     }
+  });
+
+export const finalizeAssessmentSubmission = createServerFn({
+  method: "POST",
+})
+  .validator((input: FinalizeSubmissionInput) => input)
+  .handler(async ({ data }) => {
+    const supabase = getSupabaseAdmin();
+
+    if (!data.submissionId) {
+      throw new Error("Missing submission ID.");
+    }
+
+    if (!data.files.length) {
+      throw new Error("No uploaded answer pages were provided.");
+    }
+
+    if (data.files.length > 20) {
+      throw new Error("A maximum of 20 answer pages is allowed.");
+    }
+
+    const { data: submission, error: submissionError } =
+      await supabase
+        .from("imc_test_submissions")
+        .select("id")
+        .eq("id", data.submissionId)
+        .maybeSingle();
+
+    if (submissionError) {
+      console.error("Submission verification error:", submissionError);
+      throw new Error("Unable to verify your submission.");
+    }
+
+    if (!submission) {
+      throw new Error("Submission could not be found.");
+    }
+
+    const uploadedPages = data.files.map((file) => ({
+      submission_id: data.submissionId,
+      page_number: file.pageNumber,
+      storage_path: file.storagePath,
+      original_file_name: file.originalFileName,
+    }));
+
+    const { error: pagesError } = await supabase
+      .from("imc_submission_pages")
+      .insert(uploadedPages);
+
+    if (pagesError) {
+      console.error("Submission pages database error:", pagesError);
+
+      await supabase.storage
+        .from("imc-test-submissions")
+        .remove(data.files.map((file) => file.storagePath));
+
+      await supabase
+        .from("imc_test_submissions")
+        .delete()
+        .eq("id", data.submissionId);
+
+      throw new Error(
+        "Your images were uploaded, but we could not save the submission. Please try again.",
+      );
+    }
+
+    return {
+      success: true,
+      submissionId: data.submissionId,
+      message:
+        "Your test has been submitted successfully and is now awaiting marking.",
+    };
+  });
+
+export const cancelAssessmentSubmission = createServerFn({
+  method: "POST",
+})
+  .validator((input: CancelSubmissionInput) => input)
+  .handler(async ({ data }) => {
+    const supabase = getSupabaseAdmin();
+
+    if (!data.submissionId) {
+      return { success: false };
+    }
+
+    if (data.storagePaths?.length) {
+      await supabase.storage
+        .from("imc-test-submissions")
+        .remove(data.storagePaths);
+    }
+
+    await supabase
+      .from("imc_test_submissions")
+      .delete()
+      .eq("id", data.submissionId);
+
+    return { success: true };
   });
