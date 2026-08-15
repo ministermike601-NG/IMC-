@@ -1,0 +1,795 @@
+============================================================
+INFLUENCERS NATIONS / IMC PROJECT AUDIT
+Generated: 08/10/2026 18:52:43
+Project: C:\Users\DELL\Downloads\influencer-class-hub-main\influencer-class-hub-main
+============================================================
+
+
+================ PROJECT STRUCTURE ================
+.env
+.gitignore
+.lovable\project.json
+.prettierignore
+.prettierrc
+.wrangler\deploy\config.json
+AGENTS.md
+build-error.txt
+bun.lock
+bunfig.toml
+components.json
+eslint.config.js
+mobys-assessment-audit.txt
+package.json
+public\archive\class-1\class-1-test.pdf
+public\archive\class-1\now-that-you-are-born-again.pdf
+public\favicon.ico
+public\robots.txt
+README.md
+src\assets\hero.jpg
+src\assets\logo.png
+src\components\archive\ClassArchiveCard.tsx
+src\components\archive\ClassVideo.tsx
+src\components\assessment\AnswerUpload.tsx
+src\components\assessment\TestStatusCard.tsx
+src\components\curriculum-timeline.tsx
+src\components\site-footer.tsx
+src\components\site-header.tsx
+src\components\ui\accordion.tsx
+src\components\ui\alert.tsx
+src\components\ui\alert-dialog.tsx
+src\components\ui\aspect-ratio.tsx
+src\components\ui\avatar.tsx
+src\components\ui\badge.tsx
+src\components\ui\breadcrumb.tsx
+src\components\ui\button.tsx
+src\components\ui\calendar.tsx
+src\components\ui\card.tsx
+src\components\ui\carousel.tsx
+src\components\ui\chart.tsx
+src\components\ui\checkbox.tsx
+src\components\ui\collapsible.tsx
+src\components\ui\command.tsx
+src\components\ui\context-menu.tsx
+src\components\ui\dialog.tsx
+src\components\ui\drawer.tsx
+src\components\ui\dropdown-menu.tsx
+src\components\ui\form.tsx
+src\components\ui\hover-card.tsx
+src\components\ui\input.tsx
+src\components\ui\input-otp.tsx
+src\components\ui\label.tsx
+src\components\ui\menubar.tsx
+src\components\ui\navigation-menu.tsx
+src\components\ui\pagination.tsx
+src\components\ui\popover.tsx
+src\components\ui\progress.tsx
+src\components\ui\radio-group.tsx
+src\components\ui\resizable.tsx
+src\components\ui\scroll-area.tsx
+src\components\ui\select.tsx
+src\components\ui\separator.tsx
+src\components\ui\sheet.tsx
+src\components\ui\sidebar.tsx
+src\components\ui\skeleton.tsx
+src\components\ui\slider.tsx
+src\components\ui\sonner.tsx
+src\components\ui\switch.tsx
+src\components\ui\table.tsx
+src\components\ui\tabs.tsx
+src\components\ui\textarea.tsx
+src\components\ui\toggle.tsx
+src\components\ui\toggle-group.tsx
+src\components\ui\tooltip.tsx
+src\hooks\use-mobile.tsx
+src\integrations\supabase\auth-attacher.ts
+src\integrations\supabase\auth-middleware.ts
+src\integrations\supabase\client.server.ts
+src\integrations\supabase\client.ts
+src\integrations\supabase\types.ts
+src\lib\archive\classes.ts
+src\lib\assessment\submit.ts
+src\lib\error-capture.ts
+src\lib\error-page.ts
+src\lib\event.ts
+src\lib\lovable-error-reporting.ts
+src\lib\supabase.ts
+src\lib\utils.ts
+src\router.tsx
+src\routes\__root.tsx
+src\routes\_authenticated\admin.tsx
+src\routes\_authenticated\route.tsx
+src\routes\archive\$class.tsx
+src\routes\archive\index.tsx
+src\routes\assessment\$test.tsx
+src\routes\auth.tsx
+src\routes\curriculum.tsx
+src\routes\index.tsx
+src\routes\qr.tsx
+src\routes\README.md
+src\routes\register.tsx
+src\routes\schedule.tsx
+src\routes\sitemap[.]xml.ts
+src\routes\success.tsx
+src\routeTree.gen.ts
+src\server.ts
+src\start.ts
+src\styles.css
+src\vite-env.d.ts
+supabase\config.toml
+supabase\migrations\20260728104958_da2d765b-ac98-460a-b4cb-85182b248c32.sql
+supabase\migrations\20260728105648_7a1149eb-94c7-44be-a6af-080f1a1c0f78.sql
+tsconfig.json
+vite.config.ts
+
+
+================ PACKAGE.JSON ================
+{
+  "name": "tanstack_start_ts",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/react-alert-dialog": "^1.1.15",
+    "@radix-ui/react-aspect-ratio": "^1.1.8",
+    "@radix-ui/react-avatar": "^1.1.11",
+    "@radix-ui/react-checkbox": "^1.3.3",
+    "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-context-menu": "^2.2.16",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-hover-card": "^1.1.15",
+    "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-menubar": "^1.1.16",
+    "@radix-ui/react-navigation-menu": "^1.2.14",
+    "@radix-ui/react-popover": "^1.1.15",
+    "@radix-ui/react-progress": "^1.1.8",
+    "@radix-ui/react-radio-group": "^1.3.8",
+    "@radix-ui/react-scroll-area": "^1.2.10",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-separator": "^1.1.8",
+    "@radix-ui/react-slider": "^1.3.6",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@radix-ui/react-toggle": "^1.1.10",
+    "@radix-ui/react-toggle-group": "^1.1.11",
+    "@radix-ui/react-tooltip": "^1.2.8",
+    "@supabase/supabase-js": "^2.110.8",
+    "@tailwindcss/vite": "^4.2.1",
+    "@tanstack/react-query": "^5.101.1",
+    "@tanstack/react-router": "^1.170.16",
+    "@tanstack/react-start": "^1.168.26",
+    "@tanstack/router-plugin": "^1.168.18",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "date-fns": "^4.1.0",
+    "embla-carousel-react": "^8.6.0",
+    "input-otp": "^1.4.2",
+    "lucide-react": "^0.575.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.0",
+    "react-day-picker": "^9.14.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.71.2",
+    "react-resizable-panels": "^4.6.5",
+    "recharts": "^2.15.4",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.1",
+    "tw-animate-css": "^1.3.4",
+    "vaul": "^1.1.2",
+    "vite-tsconfig-paths": "^6.0.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@lovable.dev/vite-tanstack-config": "^2.7.7",
+    "@types/node": "^22.16.5",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "eslint": "^10.8.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^15.15.0",
+    "nitro": "3.0.260603-beta",
+    "prettier": "^3.7.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.56.1",
+    "vite": "^8.0.16"
+  }
+}
+
+
+================ ENVIRONMENT VARIABLES ================
+FILE: .env
+VITE_SUPABASE_URL = [REDACTED]
+VITE_SUPABASE_ANON_KEY = [REDACTED]
+SUPABASE_SERVICE_ROLE_KEY = [REDACTED]
+
+
+================ SUPABASE REFERENCES ================
+
+FILE: package.json
+LINE 42: "@supabase/supabase-js": "^2.110.8",
+
+FILE: src\start.ts
+LINE 4: import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
+
+FILE: src\start.ts
+LINE 29: functionMiddleware: [attachSupabaseAuth],
+
+FILE: src\integrations\supabase\auth-attacher.ts
+LINE 3: import { supabase } from './client'
+
+FILE: src\integrations\supabase\auth-attacher.ts
+LINE 7: export const attachSupabaseAuth = createMiddleware({ type: 'function' }).client(
+
+FILE: src\integrations\supabase\auth-attacher.ts
+LINE 9: const { data } = await supabase.auth.getSession()
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 4: import { createClient } from '@supabase/supabase-js'
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 9: function isNewSupabaseApiKey(value: string): boolean {
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 13: function createSupabaseFetch(supabaseKey: string): typeof fetch {
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 23: // New Supabase API keys are opaque strings, not bearer JWTs.
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 24: if (isNewSupabaseApiKey(supabaseKey) && headers.get('Authorization') === `Bearer ${supabaseKey}`) {
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 28: headers.set('apikey', supabaseKey);
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 33: export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server(
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 36: const SUPABASE_URL = process.env.SUPABASE_URL;
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 37: const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 39: if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 41: ...(!SUPABASE_URL ? ['SUPABASE_URL'] : []),
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 42: ...(!SUPABASE_PUBLISHABLE_KEY ? ['SUPABASE_PUBLISHABLE_KEY'] : []),
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 44: const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Connect Supabase in Lovable Cloud.`;
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 45: console.error(`[Supabase] ${message}`);
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 74: const supabase = createClient<Database>(
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 75: SUPABASE_URL!,
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 76: SUPABASE_PUBLISHABLE_KEY!,
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 79: fetch: createSupabaseFetch(SUPABASE_PUBLISHABLE_KEY!),
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 92: const { data, error } = await supabase.auth.getClaims(token);
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 103: supabase,
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 2: // Server-side Supabase client with service role key - bypasses RLS.
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 5: import { createClient } from '@supabase/supabase-js';
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 8: function isNewSupabaseApiKey(value: string): boolean {
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 12: function createSupabaseFetch(supabaseKey: string): typeof fetch {
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 22: // New Supabase API keys are opaque strings, not bearer JWTs.
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 23: if (isNewSupabaseApiKey(supabaseKey) && headers.get('Authorization') === `Bearer ${supabaseKey}`) {
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 27: headers.set('apikey', supabaseKey);
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 32: function createSupabaseAdminClient() {
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 33: const SUPABASE_URL = process.env.SUPABASE_URL;
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 34: const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 36: if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 38: ...(!SUPABASE_URL ? ['SUPABASE_URL'] : []),
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 39: ...(!SUPABASE_SERVICE_ROLE_KEY ? ['SUPABASE_SERVICE_ROLE_KEY'] : []),
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 41: const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Connect Supabase in Lovable Cloud.`;
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 42: console.error(`[Supabase] ${message}`);
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 46: return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 48: fetch: createSupabaseFetch(SUPABASE_SERVICE_ROLE_KEY),
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 58: let _supabaseAdmin: ReturnType<typeof createSupabaseAdminClient> | undefined;
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 60: // Server-side Supabase client with service role - bypasses RLS
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 62: // Load inside server handlers: const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 64: export const supabaseAdmin = new Proxy({} as ReturnType<typeof createSupabaseAdminClient>, {
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 66: if (!_supabaseAdmin) _supabaseAdmin = createSupabaseAdminClient();
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 67: return Reflect.get(_supabaseAdmin, prop, receiver);
+
+FILE: src\integrations\supabase\client.ts
+LINE 2: import { createClient } from '@supabase/supabase-js';
+
+FILE: src\integrations\supabase\client.ts
+LINE 5: function isNewSupabaseApiKey(value: string): boolean {
+
+FILE: src\integrations\supabase\client.ts
+LINE 9: function createSupabaseFetch(supabaseKey: string): typeof fetch {
+
+FILE: src\integrations\supabase\client.ts
+LINE 19: // New Supabase API keys are opaque strings, not bearer JWTs.
+
+FILE: src\integrations\supabase\client.ts
+LINE 20: if (isNewSupabaseApiKey(supabaseKey) && headers.get('Authorization') === `Bearer ${supabaseKey}`) {
+
+FILE: src\integrations\supabase\client.ts
+LINE 24: headers.set('apikey', supabaseKey);
+
+FILE: src\integrations\supabase\client.ts
+LINE 30: function createSupabaseClient() {
+
+FILE: src\integrations\supabase\client.ts
+LINE 33: const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+
+FILE: src\integrations\supabase\client.ts
+LINE 34: const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY;
+
+FILE: src\integrations\supabase\client.ts
+LINE 36: if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+
+FILE: src\integrations\supabase\client.ts
+LINE 38: ...(!SUPABASE_URL ? ['SUPABASE_URL'] : []),
+
+FILE: src\integrations\supabase\client.ts
+LINE 39: ...(!SUPABASE_PUBLISHABLE_KEY ? ['SUPABASE_PUBLISHABLE_KEY'] : []),
+
+FILE: src\integrations\supabase\client.ts
+LINE 41: const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Connect Supabase in Lovable Cloud.`;
+
+FILE: src\integrations\supabase\client.ts
+LINE 42: console.error(`[Supabase] ${message}`);
+
+FILE: src\integrations\supabase\client.ts
+LINE 46: return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+
+FILE: src\integrations\supabase\client.ts
+LINE 48: fetch: createSupabaseFetch(SUPABASE_PUBLISHABLE_KEY),
+
+FILE: src\integrations\supabase\client.ts
+LINE 58: let _supabase: ReturnType<typeof createSupabaseClient> | undefined;
+
+FILE: src\integrations\supabase\client.ts
+LINE 60: // Import the supabase client like this:
+
+FILE: src\integrations\supabase\client.ts
+LINE 61: // import { supabase } from "@/integrations/supabase/client";
+
+FILE: src\integrations\supabase\client.ts
+LINE 62: export const supabase = new Proxy({} as ReturnType<typeof createSupabaseClient>, {
+
+FILE: src\integrations\supabase\client.ts
+LINE 64: if (!_supabase) _supabase = createSupabaseClient();
+
+FILE: src\integrations\supabase\client.ts
+LINE 65: return Reflect.get(_supabase, prop, receiver);
+
+FILE: src\integrations\supabase\types.ts
+LINE 12: __InternalSupabase: {
+
+FILE: src\integrations\supabase\types.ts
+LINE 154: type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+FILE: src\lib\supabase.ts
+LINE 2: import { createClient } from "@supabase/supabase-js";
+
+FILE: src\lib\supabase.ts
+LINE 4: const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+
+FILE: src\lib\supabase.ts
+LINE 6: const supabaseKey =
+
+FILE: src\lib\supabase.ts
+LINE 7: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
+
+FILE: src\lib\supabase.ts
+LINE 8: import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+FILE: src\lib\supabase.ts
+LINE 10: if (!supabaseUrl) {
+
+FILE: src\lib\supabase.ts
+LINE 11: throw new Error("Missing VITE_SUPABASE_URL.");
+
+FILE: src\lib\supabase.ts
+LINE 14: if (!supabaseKey) {
+
+FILE: src\lib\supabase.ts
+LINE 16: "Missing Supabase publishable key. Set VITE_SUPABASE_PUBLISHABLE_KEY in your environment variables.",
+
+FILE: src\lib\supabase.ts
+LINE 20: export const supabase = createClient(supabaseUrl, supabaseKey);
+
+FILE: src\lib\assessment\submit.ts
+LINE 2: import { createClient } from "@supabase/supabase-js";
+
+FILE: src\lib\assessment\submit.ts
+LINE 17: function getSupabaseAdmin() {
+
+FILE: src\lib\assessment\submit.ts
+LINE 18: const url = process.env.VITE_SUPABASE_URL;
+
+FILE: src\lib\assessment\submit.ts
+LINE 19: const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+FILE: src\lib\assessment\submit.ts
+LINE 22: throw new Error("Supabase server credentials are not configured.");
+
+FILE: src\lib\assessment\submit.ts
+LINE 38: const supabase = getSupabaseAdmin();
+
+FILE: src\lib\assessment\submit.ts
+LINE 56: await supabase
+
+FILE: src\lib\assessment\submit.ts
+LINE 88: const { data: test, error: testError } = await supabase
+
+FILE: src\lib\assessment\submit.ts
+LINE 105: await supabase
+
+FILE: src\lib\assessment\submit.ts
+LINE 126: await supabase
+
+FILE: src\lib\assessment\submit.ts
+LINE 171: const { error: uploadError } = await supabase.storage
+
+FILE: src\lib\assessment\submit.ts
+LINE 190: const { error: pagesError } = await supabase
+
+FILE: src\lib\assessment\submit.ts
+LINE 205: await supabase
+
+FILE: src\routes\auth.tsx
+LINE 11: import { supabase } from "@/integrations/supabase/client";
+
+FILE: src\routes\auth.tsx
+LINE 35: supabase.auth.getSession().then(({ data }) => {
+
+FILE: src\routes\auth.tsx
+LINE 43: const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+
+FILE: src\routes\auth.tsx
+LINE 55: const { error } = await supabase.auth.signUp({
+
+FILE: src\routes\register.tsx
+LINE 27: import { supabase } from "@/lib/supabase";
+
+FILE: src\routes\register.tsx
+LINE 123: const { error } = await supabase.from("registrations").insert({
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 36: import { supabase } from "@/integrations/supabase/client";
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 101: const { data } = await supabase.from("user_roles").select("role").eq("role", "admin");
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 110: const { data, error } = await supabase
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 121: const { data, error } = await supabase.rpc("claim_first_admin");
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 139: const { error } = await supabase
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 154: const { error } = await supabase.from("registrations").delete().eq("id", id);
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 202: await supabase.auth.signOut();
+
+FILE: src\routes\_authenticated\route.tsx
+LINE 3: import { supabase } from "@/integrations/supabase/client";
+
+FILE: src\routes\_authenticated\route.tsx
+LINE 8: const { data, error } = await supabase.auth.getUser();
+
+FILE: supabase\migrations\20260728104958_da2d765b-ac98-460a-b4cb-85182b248c32.sql
+LINE 12: GRANT ALL ON public.user_roles TO service_role;
+
+FILE: supabase\migrations\20260728104958_da2d765b-ac98-460a-b4cb-85182b248c32.sql
+LINE 59: GRANT ALL ON public.registrations TO service_role;
+
+
+================ ROUTES ================
+src\routes\__root.tsx
+src\routes\_authenticated\admin.tsx
+src\routes\_authenticated\route.tsx
+src\routes\archive\$class.tsx
+src\routes\archive\index.tsx
+src\routes\assessment\$test.tsx
+src\routes\auth.tsx
+src\routes\curriculum.tsx
+src\routes\index.tsx
+src\routes\qr.tsx
+src\routes\README.md
+src\routes\register.tsx
+src\routes\schedule.tsx
+src\routes\sitemap[.]xml.ts
+src\routes\success.tsx
+
+
+================ SERVER FILES ================
+src\integrations\supabase\client.server.ts
+src\start.ts
+
+
+================ SUPABASE INTEGRATION FILES ================
+FILE: src\integrations\supabase\auth-attacher.ts
+FILE: src\integrations\supabase\auth-middleware.ts
+FILE: src\integrations\supabase\client.server.ts
+FILE: src\integrations\supabase\client.ts
+FILE: src\integrations\supabase\types.ts
+
+
+================ ASSESSMENT FILES ================
+src\components\assessment\AnswerUpload.tsx
+src\components\assessment\TestStatusCard.tsx
+src\lib\assessment\submit.ts
+src\routes\assessment\$test.tsx
+
+
+================ ARCHIVE / CURRICULUM FILES ================
+src\assets\hero.jpg
+src\assets\logo.png
+src\components\archive\ClassArchiveCard.tsx
+src\components\archive\ClassVideo.tsx
+src\components\assessment\AnswerUpload.tsx
+src\components\assessment\TestStatusCard.tsx
+src\components\curriculum-timeline.tsx
+src\components\site-footer.tsx
+src\components\site-header.tsx
+src\components\ui\accordion.tsx
+src\components\ui\alert.tsx
+src\components\ui\alert-dialog.tsx
+src\components\ui\aspect-ratio.tsx
+src\components\ui\avatar.tsx
+src\components\ui\badge.tsx
+src\components\ui\breadcrumb.tsx
+src\components\ui\button.tsx
+src\components\ui\calendar.tsx
+src\components\ui\card.tsx
+src\components\ui\carousel.tsx
+src\components\ui\chart.tsx
+src\components\ui\checkbox.tsx
+src\components\ui\collapsible.tsx
+src\components\ui\command.tsx
+src\components\ui\context-menu.tsx
+src\components\ui\dialog.tsx
+src\components\ui\drawer.tsx
+src\components\ui\dropdown-menu.tsx
+src\components\ui\form.tsx
+src\components\ui\hover-card.tsx
+src\components\ui\input.tsx
+src\components\ui\input-otp.tsx
+src\components\ui\label.tsx
+src\components\ui\menubar.tsx
+src\components\ui\navigation-menu.tsx
+src\components\ui\pagination.tsx
+src\components\ui\popover.tsx
+src\components\ui\progress.tsx
+src\components\ui\radio-group.tsx
+src\components\ui\resizable.tsx
+src\components\ui\scroll-area.tsx
+src\components\ui\select.tsx
+src\components\ui\separator.tsx
+src\components\ui\sheet.tsx
+src\components\ui\sidebar.tsx
+src\components\ui\skeleton.tsx
+src\components\ui\slider.tsx
+src\components\ui\sonner.tsx
+src\components\ui\switch.tsx
+src\components\ui\table.tsx
+src\components\ui\tabs.tsx
+src\components\ui\textarea.tsx
+src\components\ui\toggle.tsx
+src\components\ui\toggle-group.tsx
+src\components\ui\tooltip.tsx
+src\hooks\use-mobile.tsx
+src\integrations\supabase\auth-attacher.ts
+src\integrations\supabase\auth-middleware.ts
+src\integrations\supabase\client.server.ts
+src\integrations\supabase\client.ts
+src\integrations\supabase\types.ts
+src\lib\archive\classes.ts
+src\lib\assessment\submit.ts
+src\lib\error-capture.ts
+src\lib\error-page.ts
+src\lib\event.ts
+src\lib\lovable-error-reporting.ts
+src\lib\supabase.ts
+src\lib\utils.ts
+src\router.tsx
+src\routes\__root.tsx
+src\routes\_authenticated\admin.tsx
+src\routes\_authenticated\route.tsx
+src\routes\archive\$class.tsx
+src\routes\archive\index.tsx
+src\routes\assessment\$test.tsx
+src\routes\auth.tsx
+src\routes\curriculum.tsx
+src\routes\index.tsx
+src\routes\qr.tsx
+src\routes\README.md
+src\routes\register.tsx
+src\routes\schedule.tsx
+src\routes\sitemap[.]xml.ts
+src\routes\success.tsx
+src\routeTree.gen.ts
+src\server.ts
+src\start.ts
+src\styles.css
+src\vite-env.d.ts
+
+
+================ REGISTRATION FILES ================
+src\routes\register.tsx
+
+
+================ SUPABASE TABLE REFERENCES ================
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 4: import { createClient } from '@supabase/supabase-js'
+
+FILE: src\integrations\supabase\auth-middleware.ts
+LINE 74: const supabase = createClient<Database>(
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 5: import { createClient } from '@supabase/supabase-js';
+
+FILE: src\integrations\supabase\client.server.ts
+LINE 46: return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+
+FILE: src\integrations\supabase\client.ts
+LINE 2: import { createClient } from '@supabase/supabase-js';
+
+FILE: src\integrations\supabase\client.ts
+LINE 46: return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+
+FILE: src\integrations\supabase\types.ts
+LINE 10: // Allows to automatically instantiate createClient with right options
+
+FILE: src\integrations\supabase\types.ts
+LINE 11: // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+
+FILE: src\lib\supabase.ts
+LINE 2: import { createClient } from "@supabase/supabase-js";
+
+FILE: src\lib\supabase.ts
+LINE 20: export const supabase = createClient(supabaseUrl, supabaseKey);
+
+FILE: src\lib\assessment\submit.ts
+LINE 2: import { createClient } from "@supabase/supabase-js";
+
+FILE: src\lib\assessment\submit.ts
+LINE 25: return createClient(url, serviceRoleKey, {
+
+FILE: src\lib\assessment\submit.ts
+LINE 57: .from("registrations")
+
+FILE: src\lib\assessment\submit.ts
+LINE 89: .from("imc_tests")
+
+FILE: src\lib\assessment\submit.ts
+LINE 106: .from("imc_test_submissions")
+
+FILE: src\lib\assessment\submit.ts
+LINE 127: .from("imc_test_submissions")
+
+FILE: src\lib\assessment\submit.ts
+LINE 171: const { error: uploadError } = await supabase.storage
+
+FILE: src\lib\assessment\submit.ts
+LINE 172: .from("imc-test-submissions")
+
+FILE: src\lib\assessment\submit.ts
+LINE 191: .from("imc_submission_pages")
+
+FILE: src\lib\assessment\submit.ts
+LINE 206: .from("imc_test_submissions")
+
+FILE: src\routes\register.tsx
+LINE 123: const { error } = await supabase.from("registrations").insert({
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 101: const { data } = await supabase.from("user_roles").select("role").eq("role", "admin");
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 111: .from("registrations")
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 121: const { data, error } = await supabase.rpc("claim_first_admin");
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 140: .from("registrations")
+
+FILE: src\routes\_authenticated\admin.tsx
+LINE 154: const { error } = await supabase.from("registrations").delete().eq("id", id);
+
+
+================ GIT STATUS ================
+ M .env
+ M src/lib/supabase.ts
+?? PROJECT_AUDIT.txt
+
+
+================ TYPESCRIPT CHECK ================
+src/routes/assessment/$test.tsx(131,21): error TS18048: 'archiveClass' is possibly 'undefined'.
+
+
+============================================================
+END OF PROJECT AUDIT
+============================================================

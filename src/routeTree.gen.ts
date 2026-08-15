@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CurriculumRouteImport } from './routes/curriculum'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as QrRouteImport } from './routes/qr'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ScheduleRouteImport } from './routes/schedule'
@@ -35,6 +36,11 @@ const AuthRoute = AuthRouteImport.update({
 const CurriculumRoute = CurriculumRouteImport.update({
   id: '/curriculum',
   path: '/curriculum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QrRoute = QrRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/curriculum': typeof CurriculumRoute
+  '/dashboard': typeof DashboardRoute
   '/qr': typeof QrRoute
   '/register': typeof RegisterRoute
   '/schedule': typeof ScheduleRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/curriculum': typeof CurriculumRoute
+  '/dashboard': typeof DashboardRoute
   '/qr': typeof QrRoute
   '/register': typeof RegisterRoute
   '/schedule': typeof ScheduleRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/curriculum': typeof CurriculumRoute
+  '/dashboard': typeof DashboardRoute
   '/qr': typeof QrRoute
   '/register': typeof RegisterRoute
   '/schedule': typeof ScheduleRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/curriculum'
+    | '/dashboard'
     | '/qr'
     | '/register'
     | '/schedule'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/curriculum'
+    | '/dashboard'
     | '/qr'
     | '/register'
     | '/schedule'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/curriculum'
+    | '/dashboard'
     | '/qr'
     | '/register'
     | '/schedule'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   CurriculumRoute: typeof CurriculumRoute
+  DashboardRoute: typeof DashboardRoute
   QrRoute: typeof QrRoute
   RegisterRoute: typeof RegisterRoute
   ScheduleRoute: typeof ScheduleRoute
@@ -207,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/curriculum'
       fullPath: '/curriculum'
       preLoaderRoute: typeof CurriculumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/qr': {
@@ -279,6 +299,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   CurriculumRoute: CurriculumRoute,
+  DashboardRoute: DashboardRoute,
   QrRoute: QrRoute,
   RegisterRoute: RegisterRoute,
   ScheduleRoute: ScheduleRoute,

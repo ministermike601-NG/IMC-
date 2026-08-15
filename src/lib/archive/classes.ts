@@ -42,8 +42,8 @@ export const ARCHIVE_CLASSES: ArchiveClass[] = [
     videoUrl: "",
     ebookUrl: "",
     ebookTitle: "",
-    testUrl: "",
-    testTitle: "Class 2 Test — Coming Soon",
+    testUrl: "/archive/class-2/The Holy Spirit.pdf",
+    testTitle: "Class 2 Test Questions — The Holy Spirit",
   },
 
   {
@@ -54,12 +54,12 @@ export const ARCHIVE_CLASSES: ArchiveClass[] = [
     time: "7:00 PM",
     timezone: "GMT+1",
     description:
-      "A recorded session of Class 3 — Christian Doctrines from The Influencers Nations Membership Class.",
+      "A recorded session of Class 3 — Christian Doctrines",
     videoUrl: "",
     ebookUrl: "",
     ebookTitle: "",
-    testUrl: "",
-    testTitle: "Class 3 Test — Coming Soon",
+    testUrl: "/archive/class-3/Christian Doctrines.pdf",
+    testTitle: "Class 3 Test Questions — The Supremacy of the Bible / Doctrine",
   },
 
   {

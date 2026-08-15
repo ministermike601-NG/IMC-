@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { supabase } from "@/integrations/supabase/client";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -22,11 +23,65 @@ const NAV = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<{ id: string; email?: string | null } | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadUser = async () => {
+      const {
+        data: { user: currentUser },
+      } = await supabase.auth.getUser();
+
+      if (!mounted) return;
+
+      if (!currentUser) {
+        setUser(null);
+        setIsAdmin(false);
+        return;
+      }
+
+      setUser({ id: currentUser.id, email: currentUser.email });
+
+      const { data: roleRow } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", currentUser.id)
+        .eq("role", "admin")
+        .maybeSingle();
+
+      if (mounted) {
+        setIsAdmin(roleRow?.role === "admin");
+      }
+    };
+
+    void loadUser();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!mounted) return;
+
+      if (!session?.user) {
+        setUser(null);
+        setIsAdmin(false);
+        return;
+      }
+
+      setUser({ id: session.user.id, email: session.user.email });
+      void loadUser();
+    });
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
 
   return (
     <header className="border-b bg-background/95 backdrop-blur">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
           <img
             src={Logo}
@@ -39,13 +94,10 @@ export function SiteHeader() {
               Influencers Nations
             </h1>
 
-            <p className="text-sm text-muted-foreground">
-              Membership Class
-            </p>
+            <p className="text-sm text-muted-foreground">Membership Class</p>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((item) => (
             <Link
@@ -62,22 +114,34 @@ export function SiteHeader() {
             </Link>
           ))}
 
+          {user ? (
+            <Button asChild size="sm" variant="outline" className="ml-1 rounded-full">
+              <Link to="/dashboard">My Dashboard</Link>
+            </Button>
+          ) : (
+            <Button asChild size="sm" variant="outline" className="ml-1 rounded-full">
+              <Link to="/auth">Sign in</Link>
+            </Button>
+          )}
+
           <Button asChild size="sm" className="ml-2 rounded-full">
             <Link to="/register">Register Now</Link>
           </Button>
 
-          <Button
-            asChild
-            size="sm"
-            variant="outline"
-            className="ml-1 rounded-full"
-          >
-            <Link to="/admin">Admin</Link>
-          </Button>
+          {isAdmin && (
+            <Button asChild size="sm" variant="outline" className="ml-1 rounded-full">
+              <Link to="/admin">Admin</Link>
+            </Button>
+          )}
         </nav>
 
-        {/* Mobile Navigation */}
         <div className="flex items-center gap-2 md:hidden">
+          {!user && (
+            <Button asChild size="sm" variant="outline" className="rounded-full">
+              <Link to="/auth">Sign in</Link>
+            </Button>
+          )}
+
           <Button asChild size="sm" className="rounded-full">
             <Link to="/register">Register</Link>
           </Button>
@@ -96,9 +160,7 @@ export function SiteHeader() {
 
             <SheetContent side="right" className="w-72">
               <SheetHeader>
-                <SheetTitle className="font-display text-xl">
-                  Menu
-                </SheetTitle>
+                <SheetTitle className="font-display text-xl">Menu</SheetTitle>
               </SheetHeader>
 
               <nav className="mt-4 flex flex-col gap-2 px-4 pb-6">
@@ -113,6 +175,24 @@ export function SiteHeader() {
                   </Link>
                 ))}
 
+                {user ? (
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setOpen(false)}
+                    className="rounded-xl bg-secondary px-3 py-3 text-center text-base font-semibold text-foreground transition-colors hover:bg-secondary/80"
+                  >
+                    My Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    to="/auth"
+                    onClick={() => setOpen(false)}
+                    className="rounded-xl border border-input px-3 py-3 text-center text-base font-semibold text-foreground transition-colors hover:bg-secondary"
+                  >
+                    Sign in
+                  </Link>
+                )}
+
                 <Link
                   to="/register"
                   onClick={() => setOpen(false)}
@@ -121,13 +201,15 @@ export function SiteHeader() {
                   Register Now
                 </Link>
 
-                <Link
-                  to="/admin"
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl border border-input px-3 py-3 text-center text-base font-semibold text-foreground transition-colors hover:bg-secondary"
-                >
-                  Admin
-                </Link>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setOpen(false)}
+                    className="rounded-xl border border-input px-3 py-3 text-center text-base font-semibold text-foreground transition-colors hover:bg-secondary"
+                  >
+                    Admin
+                  </Link>
+                )}
               </nav>
             </SheetContent>
           </Sheet>

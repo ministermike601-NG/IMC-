@@ -16,6 +16,8 @@ export type Database = {
     Tables: {
       registrations: {
         Row: {
+        
+          auth_user_id: string | null
           additional_comments: string | null
           age_range: string | null
           agree_updates: boolean
@@ -44,8 +46,10 @@ export type Database = {
           prayer_request: string | null
           state: string | null
           whatsapp: string | null
+          
         }
         Insert: {
+          auth_user_id?: string | null
           additional_comments?: string | null
           age_range?: string | null
           agree_updates?: boolean
@@ -76,6 +80,7 @@ export type Database = {
           whatsapp?: string | null
         }
         Update: {
+          auth_user_id?: string | null
           additional_comments?: string | null
           age_range?: string | null
           agree_updates?: boolean
@@ -107,6 +112,133 @@ export type Database = {
         }
         Relationships: []
       }
+      imc_tests: {
+  Row: {
+    id: string
+    class_number: number
+    title: string
+    is_available: boolean
+    max_score: number | null
+  }
+  Insert: {
+    id?: string
+    class_number: number
+    title: string
+    is_available?: boolean
+    max_score?: number | null
+  }
+  Update: {
+    id?: string
+    class_number?: number
+    title?: string
+    is_available?: boolean
+    max_score?: number | null
+  }
+  Relationships: []
+}
+
+imc_test_submissions: {
+  Row: {
+    id: string
+    test_id: string
+    registration_id: string
+    status: string
+    submitted_at: string
+    marked_at: string | null
+    marker_name: string | null
+    total_score: number | null
+    max_score: number | null
+    percentage: number | null
+    grade: string | null
+    feedback: string | null
+    created_at: string
+    updated_at: string
+  }
+  Insert: {
+    id?: string
+    test_id: string
+    registration_id: string
+    status?: string
+    submitted_at?: string
+    marked_at?: string | null
+    marker_name?: string | null
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    grade?: string | null
+    feedback?: string | null
+    created_at?: string
+    updated_at?: string
+  }
+  Update: {
+    id?: string
+    test_id?: string
+    registration_id?: string
+    status?: string
+    submitted_at?: string
+    marked_at?: string | null
+    marker_name?: string | null
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    grade?: string | null
+    feedback?: string | null
+    created_at?: string
+    updated_at?: string
+  }
+  Relationships: [
+    {
+      foreignKeyName: "imc_test_submissions_registration_id_fkey"
+      columns: ["registration_id"]
+      isOneToOne: false
+      referencedRelation: "registrations"
+      referencedColumns: ["id"]
+    },
+    {
+      foreignKeyName: "imc_test_submissions_test_id_fkey"
+      columns: ["test_id"]
+      isOneToOne: false
+      referencedRelation: "imc_tests"
+      referencedColumns: ["id"]
+    }
+  ]
+}
+
+imc_submission_pages: {
+  Row: {
+    id: string
+    submission_id: string
+    page_number: number
+    storage_path: string
+    original_file_name: string
+    created_at: string
+  }
+  Insert: {
+    id?: string
+    submission_id: string
+    page_number: number
+    storage_path: string
+    original_file_name: string
+    created_at?: string
+  }
+  Update: {
+    id?: string
+    submission_id?: string
+    page_number?: number
+    storage_path?: string
+    original_file_name?: string
+    created_at?: string
+  }
+  Relationships: [
+    {
+      foreignKeyName: "imc_submission_pages_submission_id_fkey"
+      columns: ["submission_id"]
+      isOneToOne: false
+      referencedRelation: "imc_test_submissions"
+      referencedColumns: ["id"]
+    }
+  ]
+}
       user_roles: {
         Row: {
           created_at: string
