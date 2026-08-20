@@ -27,7 +27,7 @@ export const ARCHIVE_CLASSES: ArchiveClass[] = [
     ebookUrl: "/archive/class-1/now-that-you-are-born-again.pdf",
     ebookTitle: "Now That You Are Born Again",
     testUrl: "/archive/class-1/class-1-test.pdf",
-    testTitle: "Class 1 Test Questions",
+    testTitle: "Class 1 Test Questions — Available for download",
   },
 
   {
@@ -39,11 +39,11 @@ export const ARCHIVE_CLASSES: ArchiveClass[] = [
     timezone: "GMT+1",
     description:
       "A recorded session of Class 2 — The Holy Spirit from The Influencers Nations Membership Class.",
-    videoUrl: "",
+    videoUrl: "https://youtu.be/lAknLm0w60I",
     ebookUrl: "",
     ebookTitle: "",
     testUrl: "/archive/class-2/The Holy Spirit.pdf",
-    testTitle: "Class 2 Test Questions — The Holy Spirit",
+    testTitle: "Class 2 Test Questions — Available for download",
   },
 
   {
@@ -55,11 +55,11 @@ export const ARCHIVE_CLASSES: ArchiveClass[] = [
     timezone: "GMT+1",
     description:
       "A recorded session of Class 3 — Christian Doctrines",
-    videoUrl: "",
+    videoUrl: "https://youtu.be/D2r3YTwA1eI",
     ebookUrl: "",
     ebookTitle: "",
-    testUrl: "/archive/class-3/Christian Doctrines.pdf",
-    testTitle: "Class 3 Test Questions — The Supremacy of the Bible / Doctrine",
+    testUrl: "/archive/class-3/Christian doctrines.pdf",
+    testTitle: "Class 3 Test Questions — Available for download",
   },
 
   {
@@ -71,11 +71,11 @@ export const ARCHIVE_CLASSES: ArchiveClass[] = [
     timezone: "GMT+1",
     description:
       "A recorded session of Class 4 — Evangelism / Introduction to Embassy Ministries.",
-    videoUrl: "",
+    videoUrl: "https://youtu.be/HrVo_oAhMdA",
     ebookUrl: "",
     ebookTitle: "",
-    testUrl: "",
-    testTitle: "Class 4 Test — Coming Soon",
+    testUrl: "/archive/class-4/Evangelism.pdf",
+    testTitle: "Class 4 Test questions — Available for download",
   },
 
   {

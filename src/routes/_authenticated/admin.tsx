@@ -118,18 +118,31 @@ function AdminPage() {
   const [statusFilter, setStatusFilter] = useState("all");
 
   const rolesQuery = useQuery({
-    queryKey: ["is-admin"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("role", "admin");
+  queryKey: ["is-admin"],
+  queryFn: async () => {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
 
-      if (error) throw error;
-      return (data?.length ?? 0) > 0;
-    },
-  });
+    if (userError) throw userError;
 
+    if (!user) {
+      return false;
+    }
+
+    const { data, error } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+
+    if (error) throw error;
+
+    return data?.role === "admin";
+  },
+});
   const registrationsQuery = useQuery({
     queryKey: ["registrations"],
     enabled: rolesQuery.data === true,

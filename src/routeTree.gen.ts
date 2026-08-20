@@ -18,6 +18,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SuccessRouteImport } from './routes/success'
+import { Route as UpdatePasswordRouteImport } from './routes/update-password'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ArchiveIndexRouteImport } from './routes/archive/index'
 import { Route as ArchiveClassRouteImport } from './routes/archive/$class'
@@ -68,6 +69,11 @@ const SuccessRoute = SuccessRouteImport.update({
   path: '/success',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UpdatePasswordRoute = UpdatePasswordRouteImport.update({
+  id: '/update-password',
+  path: '/update-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/_authenticated/admin',
   path: '/admin',
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/success': typeof SuccessRoute
+  '/update-password': typeof UpdatePasswordRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/archive/$class': typeof ArchiveClassRoute
   '/assessment/$test': typeof AssessmentTestRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/success': typeof SuccessRoute
+  '/update-password': typeof UpdatePasswordRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/archive/$class': typeof ArchiveClassRoute
   '/assessment/$test': typeof AssessmentTestRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/success': typeof SuccessRoute
+  '/update-password': typeof UpdatePasswordRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/archive/$class': typeof ArchiveClassRoute
   '/assessment/$test': typeof AssessmentTestRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/sitemap.xml'
     | '/success'
+    | '/update-password'
     | '/admin'
     | '/archive/$class'
     | '/assessment/$test'
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/sitemap.xml'
     | '/success'
+    | '/update-password'
     | '/admin'
     | '/archive/$class'
     | '/assessment/$test'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/sitemap.xml'
     | '/success'
+    | '/update-password'
     | '/_authenticated/admin'
     | '/archive/$class'
     | '/assessment/$test'
@@ -193,6 +205,7 @@ export interface RootRouteChildren {
   ScheduleRoute: typeof ScheduleRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SuccessRoute: typeof SuccessRoute
+  UpdatePasswordRoute: typeof UpdatePasswordRoute
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   ArchiveClassRoute: typeof ArchiveClassRoute
   AssessmentTestRoute: typeof AssessmentTestRoute
@@ -264,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/update-password': {
+      id: '/update-password'
+      path: '/update-password'
+      fullPath: '/update-password'
+      preLoaderRoute: typeof UpdatePasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -305,6 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   ScheduleRoute: ScheduleRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SuccessRoute: SuccessRoute,
+  UpdatePasswordRoute: UpdatePasswordRoute,
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   ArchiveClassRoute: ArchiveClassRoute,
   AssessmentTestRoute: AssessmentTestRoute,

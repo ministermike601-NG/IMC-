@@ -44,3 +44,5 @@ mobys-assessment-audit.txt
 !.env.example
 
 .vercel
+src/integrations/supabase/types.backup.ts
+.env*
